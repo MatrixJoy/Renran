@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Renran</string>
+    <string name="empty_tips">还没记录哦快去添加一条吧+</string>
+    <string name="add">添加</string>
+    <string name="delete">删除</string>
+    <string name="schedule_string">距离%1$s还有</string>
+    <string name="schedule_pass_string">%1$s已经过去</string>
+    <string name="day">%1$s 天</string>
+    <string name="true_date">即: %1$s</string>
+    <string name="date_format">yyy年MM月dd日</string>
+    <string name="share">分享</string>
+    <string name="share_to">分享到…</string>
+    <string name="from_renran">来自荏苒</string>
+    <string name="share_preview">分享 预览</string>
+</resources>
