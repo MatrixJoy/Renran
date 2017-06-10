@@ -1,8 +1,9 @@
-package com.aidchow.renran.schedules
+package com.aidchow.renran.sharescedule
 
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.text.SpannableString
@@ -12,8 +13,8 @@ import android.text.style.ForegroundColorSpan
 import android.util.TypedValue
 import android.view.*
 import com.aidchow.renran.R
-import com.aidchow.renran.data.Schedule
 import com.aidchow.renran.utils.Utils
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.scedule_share_fragment.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -21,22 +22,22 @@ import java.util.*
 /**
  * Created by aidchow on 17-6-9.
  */
-class ScheduleShareFragment : Fragment() {
-    private var schedule: Schedule? = null
+class ScheduleShareFragment : Fragment(), ShareScheduleContract.View {
+    private var presenter: ShareScheduleContract.Presenter? = null
 
     companion object {
-        fun newInstance(schedule: Schedule): ScheduleShareFragment {
-            val bundle = Bundle()
-            bundle.putSerializable("schedule", schedule)
-            val frg = ScheduleShareFragment()
-            frg.arguments = bundle
-            return frg
+        fun newInstance(): ScheduleShareFragment {
+            return ScheduleShareFragment()
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        schedule = arguments.getSerializable("schedule") as Schedule
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter?.start()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -49,6 +50,7 @@ class ScheduleShareFragment : Fragment() {
                 card_container.isDrawingCacheEnabled = true
                 card_container.buildDrawingCache()
                 val bitmap = Bitmap.createBitmap(card_container.drawingCache)
+                card_container.isDrawingCacheEnabled = false
                 val uri = Utils.createBitemapUri(activity, bitmap)
                 val shareIntent: Intent = Intent()
                 shareIntent.action = Intent.ACTION_SEND
@@ -73,13 +75,29 @@ class ScheduleShareFragment : Fragment() {
         val ab = (activity as AppCompatActivity).supportActionBar
         ab?.setDisplayHomeAsUpEnabled(true)
 
-        val day = (System.currentTimeMillis().div(1000) - schedule!!.date).div(86400)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
+    override fun setPresenter(presenter: ShareScheduleContract.Presenter) {
+        this.presenter = presenter
+    }
+
+    override fun setImage(imagePath: String) {
+        Glide.with(context).load(imagePath).into(image_of_schedule)
+    }
+
+
+    override fun setDescriptionAndDate(description: String, date: Long) {
+        val day = (System.currentTimeMillis().div(1000) - date).div(86400)
         if (day < 0) {
             tv_schedule_text?.text = context?.getString(R.string.schedule_string)
-                    ?.format(schedule?.description)
+                    ?.format(description)
         } else {
             tv_schedule_text?.text = context?.getString(R.string.schedule_pass_string)
-                    ?.format(schedule?.description)
+                    ?.format(description)
         }
 
         val textDay = context?.getString(R.string.day)?.format(Math.abs(day))
@@ -99,12 +117,14 @@ class ScheduleShareFragment : Fragment() {
 
         val trueDate = SimpleDateFormat(context?.getString(R.string.date_format), Locale.getDefault())
         tv_true_date!!.text = context?.getString(R.string.true_date)!!
-                .format(trueDate.format(Date(schedule!!.date * 1000)))
+                .format(trueDate.format(Date(date * 1000)))
     }
 
-    override fun onDestroy() {
-        schedule = null
-        super.onDestroy()
+    override fun isActive(): Boolean {
+        return isAdded
     }
 
+    override fun showEmptyScheduleError() {
+        Snackbar.make(view!!, "not found", Snackbar.LENGTH_SHORT).show()
+    }
 }

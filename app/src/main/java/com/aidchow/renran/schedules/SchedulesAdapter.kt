@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.aidchow.renran.R
 import com.aidchow.renran.data.Schedule
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.scedule_item.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -65,6 +66,7 @@ class SchedulesAdapter(var schedules: MutableList<Schedule>?) : RecyclerView.Ada
             this.position = holder.adapterPosition
             false
         }
+        Glide.with(context).load(schedules!![position].imagePath).into(holder.imageView)
         holder.shareButton?.setOnClickListener { view ->
             if (mShareButtonListener != null) {
                 mShareButtonListener?.onShareButtonClick(view, holder.adapterPosition)
@@ -83,11 +85,13 @@ class SchedulesAdapter(var schedules: MutableList<Schedule>?) : RecyclerView.Ada
         val tvScheduleText = itemView?.tv_schedule_text
         val tvTrueDate = itemView?.tv_true_date
         val shareButton = itemView?.btu_share
+        val imageView = itemView?.image_of_schedule
 
         init {
             itemView?.setOnCreateContextMenuListener {
                 menu, _, _ ->
                 menu?.add(Menu.NONE, R.id.action_delete, 0, R.string.delete)
+                menu?.add(Menu.NONE, R.id.action_modify, 0, R.string.modify)
             }
         }
 

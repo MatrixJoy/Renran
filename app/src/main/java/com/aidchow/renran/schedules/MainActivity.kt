@@ -1,8 +1,10 @@
 package com.aidchow.renran.schedules
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import android.widget.Toast
 import com.aidchow.renran.R
 import com.aidchow.renran.data.source.ScheduleRepository
 import com.aidchow.renran.data.source.local.ScheduleLocalDataSource
@@ -13,8 +15,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val fragment = SchedulesFragment.newInstance()
-        supportFragmentManager.beginTransaction().add(R.id.frg_container, fragment)
-                .commitAllowingStateLoss()
+        supportFragmentManager.beginTransaction().add(R.id.frg_container, fragment,
+                SchedulesFragment::class.java.canonicalName)
+                .commit()
         ScheduleRepository.destroyInstance()
         fragment.setPresenter(SchedulesPresenter(ScheduleRepository
                 .getInstance(ScheduleLocalDataSource.getInstance()), fragment))
@@ -30,4 +33,6 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+
 }

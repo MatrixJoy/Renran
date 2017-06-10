@@ -33,19 +33,19 @@ class ScheduleRepository private constructor(private val mScheduleLocalDataSourc
 
     override fun getSchedules(loadSchedulesCallback: ScheduleDataSource.LoadSchedulesCallback) {
         if (mCacheSchedules != null) {
-            loadSchedulesCallback.onScheduleLoaded(ArrayList(mCacheSchedules?.values))
+            loadSchedulesCallback.onScheduleLoaded(ArrayList<Schedule>(mCacheSchedules?.values))
             return
         }
         mScheduleLocalDataSource.getSchedules(object : ScheduleDataSource.LoadSchedulesCallback {
             override fun onScheduleLoaded(schedules: MutableList<Schedule>) {
                 if (mCacheSchedules == null) {
-                    mCacheSchedules = HashMap()
+                    mCacheSchedules = LinkedHashMap<String, Schedule>()
                 }
                 mCacheSchedules?.clear()
                 for (s: Schedule in schedules) {
                     s.scheduleID?.let { mCacheSchedules?.put(it, s) }
                 }
-                loadSchedulesCallback.onScheduleLoaded(ArrayList(mCacheSchedules?.values))
+                loadSchedulesCallback.onScheduleLoaded(schedules)
             }
 
             override fun onDataNotAvailable() {
@@ -63,7 +63,7 @@ class ScheduleRepository private constructor(private val mScheduleLocalDataSourc
         mScheduleLocalDataSource.getSchedule(scheduleId, object : ScheduleDataSource.GetScheduleCallback {
             override fun onScheduleLoaded(schedule: Schedule) {
                 if (mCacheSchedules == null) {
-                    mCacheSchedules = HashMap()
+                    mCacheSchedules = LinkedHashMap<String, Schedule>()
                 }
                 mCacheSchedules?.put(schedule.scheduleID!!, schedule)
                 scheduleCallback.onScheduleLoaded(schedule)
@@ -79,15 +79,16 @@ class ScheduleRepository private constructor(private val mScheduleLocalDataSourc
     override fun saveSchedule(schedule: Schedule) {
         mScheduleLocalDataSource.saveSchedule(schedule)
         if (mCacheSchedules == null) {
-            mCacheSchedules = HashMap()
+            mCacheSchedules = LinkedHashMap<String, Schedule>()
         }
-        mCacheSchedules?.put(schedule.scheduleID!!, schedule)
+        schedule.scheduleID?.let { mCacheSchedules?.put(it, schedule) }
     }
+
 
     override fun updateSchedule(schedule: Schedule) {
         mScheduleLocalDataSource.updateSchedule(schedule)
         if (mCacheSchedules == null) {
-            mCacheSchedules = HashMap()
+            mCacheSchedules = LinkedHashMap<String, Schedule>()
         }
         mCacheSchedules?.put(schedule.scheduleID!!, schedule)
     }

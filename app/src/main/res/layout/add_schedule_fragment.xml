@@ -12,6 +12,7 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
+            style="@style/Toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize" />
     </android.support.design.widget.AppBarLayout>
@@ -20,29 +21,48 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="@android:color/white"
         android:orientation="vertical">
 
         <EditText
+            android:id="@+id/edit_description"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:hint="那件事" />
+            android:background="@android:color/transparent"
+            android:gravity="top"
+            android:hint="@string/schedule_edit_hint"
+            android:padding="16dp" />
 
         <ImageView
-            android:layout_width="128dp"
-            android:layout_height="128dp"
-            android:layout_marginStart="16dp"
-            android:src="@drawable/logo" />
+            android:id="@+id/image_review"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginStart="16dp" />
 
+        <RelativeLayout
+            android:id="@+id/relative_choose_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tv_pass_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_chevron_right"
+                android:drawablePadding="16dp"
+                android:drawableStart="@drawable/ic_alarm"
+                android:text="@string/pass_time"
+                android:textAppearance="@android:style/TextAppearance.Material.Widget.Toolbar.Title" />
+        </RelativeLayout>
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:background="@color/colorAccent" />
 </LinearLayout>

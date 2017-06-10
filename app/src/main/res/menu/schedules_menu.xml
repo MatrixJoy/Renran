@@ -10,4 +10,9 @@
         android:id="@+id/action_delete"
         android:title="@string/delete"
         android:visible="false" />
+
+    <item
+        android:id="@+id/action_modify"
+        android:title="@string/modify"
+        android:visible="false" />
 </menu>

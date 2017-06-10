@@ -21,11 +21,6 @@ class ScheduleLocalDataSource private constructor() : ScheduleDataSource {
         }
     }
 
-    init {
-        saveSchedule(Schedule("/ssss", "计算机网络考试", 1497974400))
-        saveSchedule(Schedule("/ssss", "四六级考试", 1497628800))
-        saveSchedule(Schedule("/ssss", "她生日", 1514908800))
-    }
 
     override fun getSchedules(loadSchedulesCallback: ScheduleDataSource.LoadSchedulesCallback) {
         val rlm = RealemHelper.getRenRanRealmInstance()
@@ -53,13 +48,17 @@ class ScheduleLocalDataSource private constructor() : ScheduleDataSource {
     override fun saveSchedule(schedule: Schedule) {
         val rlm = RealemHelper.getRenRanRealmInstance()
         rlm.beginTransaction()
-        rlm.copyToRealmOrUpdate(schedule)
+        rlm.copyToRealm(schedule)
         rlm.commitTransaction()
         rlm.close()
     }
 
     override fun updateSchedule(schedule: Schedule) {
-        saveSchedule(schedule)
+        val rlm = RealemHelper.getRenRanRealmInstance()
+        rlm.beginTransaction()
+        rlm.copyToRealmOrUpdate(schedule)
+        rlm.commitTransaction()
+        rlm.close()
     }
 
     override fun deleteSchedule(schedule: Schedule) {

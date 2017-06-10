@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Renran</string>
+    <string name="app_name">荏苒</string>
     <string name="empty_tips">还没记录哦快去添加一条吧+</string>
     <string name="add">添加</string>
     <string name="delete">删除</string>
@@ -11,5 +11,14 @@
     <string name="share">分享</string>
     <string name="share_to">分享到…</string>
     <string name="from_renran">来自荏苒</string>
-    <string name="share_preview">分享 预览</string>
+    <string name="share_preview">分享预览</string>
+    <string name="add_new_schedule">记录</string>
+    <string name="pass_time">到期时间</string>
+    <string name="schedule_edit_hint">那件事</string>
+    <string name="year_mon_date">%1$s年%2$s月%3$s日</string>
+    <string name="modify">编辑</string>
+    <string name="from_camera">拍照</string>
+    <string name="from_photo">从相册选择</string>
+    <string name="permission_denied">我们需要这些权限,进行图片选取</string>
+    <string name="setting">设置</string>
 </resources>

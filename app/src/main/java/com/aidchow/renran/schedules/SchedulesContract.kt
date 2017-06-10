@@ -20,6 +20,8 @@ interface SchedulesContract {
 
         fun isActive(): Boolean
 
+        fun showAddSuccessView()
+
     }
 
     interface Presenter : BasePresenter {
@@ -30,6 +32,7 @@ interface SchedulesContract {
         fun deleteSchedules(schedule: Schedule)
 
         fun addNewSchedules()
+        fun result(requestCode: Int, resultCode: Int)
 
     }
 }

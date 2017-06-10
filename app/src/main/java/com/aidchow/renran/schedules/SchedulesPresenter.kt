@@ -1,5 +1,7 @@
 package com.aidchow.renran.schedules
 
+import android.app.Activity.RESULT_OK
+import com.aidchow.renran.addschedule.AddScheduleActivity
 import com.aidchow.renran.data.Schedule
 import com.aidchow.renran.data.source.ScheduleDataSource
 import com.aidchow.renran.data.source.ScheduleRepository
@@ -10,6 +12,10 @@ import com.aidchow.renran.data.source.ScheduleRepository
 class SchedulesPresenter(val scheduleRepository: ScheduleRepository,
                          val view: SchedulesContract.View)
     : SchedulesContract.Presenter {
+    init {
+        view.setPresenter(this)
+    }
+
     override fun start() {
         loadSchedules()
     }
@@ -39,5 +45,11 @@ class SchedulesPresenter(val scheduleRepository: ScheduleRepository,
 
     override fun addNewSchedules() {
         view.showAddNewScheduleUi()
+    }
+
+    override fun result(requestCode: Int, resultCode: Int) {
+        if (AddScheduleActivity.ADD_SCHEDULE_REQUEST_CODE == requestCode && RESULT_OK == resultCode) {
+            view.showAddSuccessView()
+        }
     }
 }
