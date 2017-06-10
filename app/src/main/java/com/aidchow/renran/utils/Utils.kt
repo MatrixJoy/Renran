@@ -74,16 +74,17 @@ object Utils {
                 val contentUri: Uri? = ContentUris.withAppendedId(
                         Uri.parse("content://downloads/public_downloads"), docId.toLong())
                 imagePath = getImagePath(context, contentUri, null)
-            } else if ("content".equals(uri?.scheme, true)) {
-                imagePath = getImagePath(context, uri, null)
-            } else if ("file".equals(uri?.scheme, true)) {
-                imagePath = uri?.path
             }
+        } else if ("content".equals(uri?.scheme, true)) {
+            imagePath = getImagePath(context, uri, null)
+
+        } else if ("file".equals(uri?.scheme, true)) {
+            imagePath = uri?.path
         }
         return imagePath
     }
 
-    private fun getImagePath(context: Context, uri: Uri?, selection: String?): String? {
+    fun getImagePath(context: Context, uri: Uri?, selection: String?): String? {
         var path: String? = null
         val cursor = context.contentResolver.query(uri, null, selection, null, null)
         if (cursor != null) {

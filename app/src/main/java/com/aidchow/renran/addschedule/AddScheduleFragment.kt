@@ -97,7 +97,7 @@ class AddScheduleFragment : BaseFragment(), AddScheduleContract.View, DatePicker
     }
 
 
-    override fun setImage(imagePath: String) {
+    override fun setImage(imagePath: String?) {
         Glide.with(context)
                 .load(imagePath)
                 .placeholder(R.drawable.ic_border_add_image)
@@ -118,7 +118,6 @@ class AddScheduleFragment : BaseFragment(), AddScheduleContract.View, DatePicker
     override fun showSchedules() {
         activity.setResult(Activity.RESULT_OK)
         activity.finish()
-
     }
 
     override fun isActive(): Boolean {
@@ -126,7 +125,7 @@ class AddScheduleFragment : BaseFragment(), AddScheduleContract.View, DatePicker
     }
 
     override fun showEmptyScheduleError() {
-        Snackbar.make(edit_description!!, "Schedule must not None ", Snackbar.LENGTH_LONG).show()
+        Snackbar.make(relative_choose_date!!, R.string.can_not_empty, Snackbar.LENGTH_LONG).show()
     }
 
     override fun setPresenter(presenter: AddScheduleContract.Presenter) {

@@ -14,7 +14,7 @@ interface AddScheduleContract {
     }
 
     interface View : BaseView<Presenter> {
-        fun setImage(imagePath: String)
+        fun setImage(imagePath: String?)
 
         fun setDescription(description: String)
 

@@ -22,7 +22,7 @@ class AddSchedulePresenter(private val mScheduleID: String?,
         if (!isNewSchedule) {
             populateSchedule()
         } else {
-            view.setImage(imagePath!!)
+            view.setImage(imagePath)
         }
     }
 

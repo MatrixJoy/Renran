@@ -21,4 +21,6 @@
     <string name="from_photo">从相册选择</string>
     <string name="permission_denied">我们需要这些权限,进行图片选取</string>
     <string name="setting">设置</string>
+    <string name="add_success">添加成功</string>
+    <string name="can_not_empty">记录不能为空哦!</string>
 </resources>

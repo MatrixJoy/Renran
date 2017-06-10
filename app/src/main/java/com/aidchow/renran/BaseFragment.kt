@@ -15,6 +15,7 @@ import com.aidchow.renran.utils.Utils
 
 /**
  * Created by aidchow on 17-6-10.
+ * BaseFragment extends this can choose photo from file or take photo
  */
 open abstract class BaseFragment : Fragment() {
     private val TAKEPHOTO_REQUEST_CODE = 20001
@@ -38,6 +39,9 @@ open abstract class BaseFragment : Fragment() {
         builder.create().show()
     }
 
+    /**
+     * access image path
+     */
     abstract fun setImagePath(imagePath: String)
 
     fun takePhoto() {
@@ -108,7 +112,11 @@ open abstract class BaseFragment : Fragment() {
             }
             CHOOSEPHOTO_REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    setImagePath(Utils.handleImagePath(context, data)!!)
+                    try {
+                        setImagePath(Utils.handleImagePath(context, data)!!)
+                    } catch (e: Exception) {
+                        println(data)
+                    }
                 }
             }
 

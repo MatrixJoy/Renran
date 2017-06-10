@@ -1,7 +1,6 @@
 package com.aidchow.renran.schedules
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -26,8 +25,6 @@ class SchedulesFragment : BaseFragment(), SchedulesContract.View, SchedulesAdapt
 
     private var presenter: SchedulesContract.Presenter? = null
     private var adapter: SchedulesAdapter? = null
-    private var uri: Uri? = null
-
 
     companion object {
         fun newInstance(): SchedulesFragment {
@@ -144,7 +141,7 @@ class SchedulesFragment : BaseFragment(), SchedulesContract.View, SchedulesAdapt
 
 
     override fun showAddSuccessView() {
-        Snackbar.make(view!!, "add success", Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(view!!, R.string.add_success, Snackbar.LENGTH_SHORT).show()
     }
 
 
