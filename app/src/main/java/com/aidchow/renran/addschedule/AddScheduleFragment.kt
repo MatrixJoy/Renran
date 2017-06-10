@@ -18,7 +18,7 @@ import java.util.*
 /**
  * Created by aidchow on 17-6-10.
  */
-class AddScheduleFragmen : BaseFragment(), AddScheduleContract.View, DatePickerDialog.OnDateSetListener {
+class AddScheduleFragment : BaseFragment(), AddScheduleContract.View, DatePickerDialog.OnDateSetListener {
     private var presenter: AddScheduleContract.Presenter? = null
     private var mScheduleId: String? = null
     private var date: Long = 0L
@@ -27,10 +27,10 @@ class AddScheduleFragmen : BaseFragment(), AddScheduleContract.View, DatePickerD
     companion object {
         val ARGUMENT_EDIT_SCHEDULE_ID = "EDIT_SCHEDULE_ID"
         val ARGUMENT_ADD_SCHEDULE_IMAGE_PATH = "ADD_SCHEDULE_IMAGE_PATH"
-        fun newInstance(): AddScheduleFragmen {
+        fun newInstance(): AddScheduleFragment {
             val bundle = Bundle()
             bundle.putBoolean("reload", false)
-            val frg = AddScheduleFragmen()
+            val frg = AddScheduleFragment()
             frg.arguments = bundle
             return frg
         }

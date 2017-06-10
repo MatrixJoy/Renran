@@ -16,11 +16,10 @@ import com.aidchow.renran.utils.Utils
 /**
  * Created by aidchow on 17-6-10.
  */
-class BaseFragment : Fragment() {
+open abstract class BaseFragment : Fragment() {
     private val TAKEPHOTO_REQUEST_CODE = 20001
     private val CHOOSEPHOTO_REQUEST_CODE = 20002
     private var uri: Uri? = null
-    var imagePath: String? = null
     fun showChooseDialog() {
         val builder = AlertDialog.Builder(activity)
                 .setItems(arrayOf(getString(R.string.from_camera), getString(R.string.from_photo)),
@@ -39,6 +38,7 @@ class BaseFragment : Fragment() {
         builder.create().show()
     }
 
+    abstract fun setImagePath(imagePath: String)
 
     fun takePhoto() {
         if (ContextCompat.checkSelfPermission(activity, android.Manifest.permission.CAMERA)
@@ -60,7 +60,7 @@ class BaseFragment : Fragment() {
 
 
     private fun openAlbum() {
-        val chooseIntent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        val chooseIntent = Intent(Intent.ACTION_GET_CONTENT)
         chooseIntent.type = "image/*"
         startActivityForResult(chooseIntent, CHOOSEPHOTO_REQUEST_CODE)
     }
@@ -103,12 +103,12 @@ class BaseFragment : Fragment() {
         when (requestCode) {
             TAKEPHOTO_REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    imagePath = uri.toString()
+                    setImagePath(uri.toString())
                 }
             }
             CHOOSEPHOTO_REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    imagePath = Utils.handleImagePath(context, data)
+                    setImagePath(Utils.handleImagePath(context, data)!!)
                 }
             }
 

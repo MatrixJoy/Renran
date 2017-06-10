@@ -51,7 +51,7 @@ class ScheduleShareFragment : Fragment(), ShareScheduleContract.View {
                 card_container.buildDrawingCache()
                 val bitmap = Bitmap.createBitmap(card_container.drawingCache)
                 card_container.isDrawingCacheEnabled = false
-                val uri = Utils.createBitemapUri(activity, bitmap)
+                val uri = Utils.createBitmapUri(activity, bitmap)
                 val shareIntent: Intent = Intent()
                 shareIntent.action = Intent.ACTION_SEND
                 shareIntent.type = "image/jpeg"

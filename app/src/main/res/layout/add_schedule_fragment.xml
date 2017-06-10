@@ -38,7 +38,8 @@
             android:id="@+id/image_review"
             android:layout_width="96dp"
             android:layout_height="96dp"
-            android:layout_marginStart="16dp" />
+            android:layout_marginStart="16dp"
+            android:scaleType="fitXY" />
 
         <RelativeLayout
             android:id="@+id/relative_choose_date"

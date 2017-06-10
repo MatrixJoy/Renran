@@ -16,8 +16,11 @@ import java.io.FileOutputStream
  * Created by aidchow on 17-6-9.
  */
 object Utils {
-    fun createBitemapUri(context: Context, bitmap: Bitmap): Uri {
-        val sharePath = File(context.cacheDir, "share")
+    /***
+     * for share to qq not use the file provider to crate uri so use this way to create a uri
+     */
+    fun createBitmapUri(context: Context, bitmap: Bitmap): Uri {
+        val sharePath = context.externalCacheDir
         if (!sharePath.exists()) {
             sharePath.mkdirs()
         }
@@ -27,16 +30,13 @@ object Utils {
         }
         val out = FileOutputStream(file)
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
-        var uri: Uri? = null
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            uri = FileProvider.getUriForFile(context, "com.aidchow.renran.fileprovider", file)
-        } else {
-            uri = Uri.fromFile(file)
-        }
-        return uri
+        val filePath = "file:" + file.absolutePath
+        return Uri.parse(filePath)
     }
 
+    /**
+     * create take photos uri
+     */
     fun captureUri(context: Context): Uri? {
         val filePath = File(context.externalCacheDir, "images")
         if (!filePath.exists()) {
@@ -57,7 +57,10 @@ object Utils {
         return uri
     }
 
-     fun handleImagePath(context: Context, data: Intent?): String? {
+    /**
+     * handle the image path when from the file
+     */
+    fun handleImagePath(context: Context, data: Intent?): String? {
         var imagePath: String? = null
         val uri: Uri? = data?.data
         if (DocumentsContract.isDocumentUri(context, uri)) {
