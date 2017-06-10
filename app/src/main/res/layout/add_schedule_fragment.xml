@@ -17,53 +17,60 @@
             android:layout_height="?attr/actionBarSize" />
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@android:color/white"
-        android:orientation="vertical">
+        android:fillViewport="true">
 
-        <EditText
-            android:id="@+id/edit_description"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:gravity="top"
-            android:hint="@string/schedule_edit_hint"
-            android:padding="16dp" />
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/image_review"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:layout_marginStart="16dp"
-            android:scaleType="fitXY" />
+            <EditText
+                android:id="@+id/edit_description"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:gravity="top"
+                android:hint="@string/schedule_edit_hint"
+                android:padding="16dp" />
 
-        <RelativeLayout
-            android:id="@+id/relative_choose_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp">
+            <ImageView
+                android:id="@+id/image_review"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_marginStart="16dp"
+                android:scaleType="fitXY" />
 
-            <TextView
-                android:id="@+id/tv_pass_date"
+            <RelativeLayout
+                android:id="@+id/relative_choose_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_chevron_right"
-                android:drawablePadding="16dp"
-                android:drawableStart="@drawable/ic_alarm"
-                android:text="@string/pass_time"
-                android:textAppearance="@android:style/TextAppearance.Material.Widget.Toolbar.Title" />
-        </RelativeLayout>
+                android:padding="16dp">
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_pass_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_chevron_right"
+                    android:drawablePadding="16dp"
+                    android:drawableStart="@drawable/ic_alarm"
+                    android:text="@string/pass_time"
+                    android:textAppearance="@android:style/TextAppearance.Material.Widget.Toolbar.Title" />
+            </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:background="@color/colorAccent" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/colorAccent" />
 </LinearLayout>
+
+

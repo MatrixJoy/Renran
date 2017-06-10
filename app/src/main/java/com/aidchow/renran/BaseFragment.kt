@@ -115,11 +115,9 @@ open abstract class BaseFragment : Fragment() {
                     try {
                         setImagePath(Utils.handleImagePath(context, data)!!)
                     } catch (e: Exception) {
-                        println(data)
                     }
                 }
             }
-
         }
 
     }

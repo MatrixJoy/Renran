@@ -17,7 +17,8 @@ import java.io.FileOutputStream
  */
 object Utils {
     /***
-     * for share to qq not use the file provider to crate uri so use this way to create a uri
+     * for share to qq
+     *  because qq not support file provider  so use this way to create a uri to share image
      */
     fun createBitmapUri(context: Context, bitmap: Bitmap): Uri {
         val sharePath = context.externalCacheDir
@@ -84,7 +85,7 @@ object Utils {
         return imagePath
     }
 
-    fun getImagePath(context: Context, uri: Uri?, selection: String?): String? {
+    private fun getImagePath(context: Context, uri: Uri?, selection: String?): String? {
         var path: String? = null
         val cursor = context.contentResolver.query(uri, null, selection, null, null)
         if (cursor != null) {

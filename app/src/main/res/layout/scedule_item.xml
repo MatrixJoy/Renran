@@ -21,7 +21,7 @@
                 android:layout_width="256dp"
                 android:layout_height="256dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="16dp"
                 android:src="@drawable/logo"
                 app:civ_border_overlay="true" />
 

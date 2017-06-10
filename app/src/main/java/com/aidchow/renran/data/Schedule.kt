@@ -1,13 +1,12 @@
 package com.aidchow.renran.data
 
 import io.realm.RealmObject
-import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
-import java.io.Serializable
 import java.util.*
 
 /**
  * Created by aidchow on 17-6-8.
+ * Schedule bean
  */
 
 open class Schedule(

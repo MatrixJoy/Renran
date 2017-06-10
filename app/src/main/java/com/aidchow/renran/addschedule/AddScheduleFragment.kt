@@ -125,7 +125,7 @@ class AddScheduleFragment : BaseFragment(), AddScheduleContract.View, DatePicker
     }
 
     override fun showEmptyScheduleError() {
-        Snackbar.make(relative_choose_date!!, R.string.can_not_empty, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(edit_description!!, R.string.can_not_empty, Snackbar.LENGTH_LONG).show()
     }
 
     override fun setPresenter(presenter: AddScheduleContract.Presenter) {

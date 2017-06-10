@@ -2,7 +2,7 @@ package com.aidchow.renran.data.source.local
 
 import com.aidchow.renran.data.Schedule
 import com.aidchow.renran.data.source.ScheduleDataSource
-import com.aidchow.renran.realm.RealemHelper
+import com.aidchow.renran.realm.RealmHelper
 import io.realm.RealmResults
 
 /**
@@ -23,7 +23,7 @@ class ScheduleLocalDataSource private constructor() : ScheduleDataSource {
 
 
     override fun getSchedules(loadSchedulesCallback: ScheduleDataSource.LoadSchedulesCallback) {
-        val rlm = RealemHelper.getRenRanRealmInstance()
+        val rlm = RealmHelper.getRenRanRealmInstance()
         val results: RealmResults<Schedule> = rlm.where(Schedule::class.java).equalTo("isDelete", false).findAll()
         if (results.isEmpty()) {
             loadSchedulesCallback.onDataNotAvailable()
@@ -33,7 +33,7 @@ class ScheduleLocalDataSource private constructor() : ScheduleDataSource {
     }
 
     override fun getSchedule(scheduleId: String, scheduleCallback: ScheduleDataSource.GetScheduleCallback) {
-        val rlm = RealemHelper.getRenRanRealmInstance()
+        val rlm = RealmHelper.getRenRanRealmInstance()
         val result = rlm.where(Schedule::class.java).equalTo("scheduleID", scheduleId).findFirst()
         if (result == null) {
             scheduleCallback.onDataNotAvailable()
@@ -46,7 +46,7 @@ class ScheduleLocalDataSource private constructor() : ScheduleDataSource {
      * create or update a schedule
      */
     override fun saveSchedule(schedule: Schedule) {
-        val rlm = RealemHelper.getRenRanRealmInstance()
+        val rlm = RealmHelper.getRenRanRealmInstance()
         rlm.beginTransaction()
         rlm.copyToRealm(schedule)
         rlm.commitTransaction()
@@ -54,7 +54,7 @@ class ScheduleLocalDataSource private constructor() : ScheduleDataSource {
     }
 
     override fun updateSchedule(schedule: Schedule) {
-        val rlm = RealemHelper.getRenRanRealmInstance()
+        val rlm = RealmHelper.getRenRanRealmInstance()
         rlm.beginTransaction()
         rlm.copyToRealmOrUpdate(schedule)
         rlm.commitTransaction()
@@ -62,7 +62,7 @@ class ScheduleLocalDataSource private constructor() : ScheduleDataSource {
     }
 
     override fun deleteSchedule(schedule: Schedule) {
-        val rlm = RealemHelper.getRenRanRealmInstance()
+        val rlm = RealmHelper.getRenRanRealmInstance()
         rlm.beginTransaction()
         schedule.isDelete = true
         rlm.copyToRealmOrUpdate(schedule)

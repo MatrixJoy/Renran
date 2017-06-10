@@ -12,6 +12,7 @@ import com.aidchow.renran.data.source.ScheduleRepository
 class SchedulesPresenter(val scheduleRepository: ScheduleRepository,
                          val view: SchedulesContract.View)
     : SchedulesContract.Presenter {
+
     init {
         view.setPresenter(this)
     }
