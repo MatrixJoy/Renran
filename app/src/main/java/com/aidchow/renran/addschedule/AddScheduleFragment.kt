@@ -58,7 +58,7 @@ class AddScheduleFragment : BaseFragment(), AddScheduleContract.View, DatePicker
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.action_add_new_schedule -> presenter?.saveSchedule(imagePath!!,
+            R.id.action_add_new_schedule -> presenter?.saveSchedule(imagePath,
                     edit_description?.text.toString(), date, mScheduleId)
         }
         return super.onOptionsItemSelected(item)

@@ -42,20 +42,26 @@ class RenRanWidgetViewsFactory(val context: Context) : RemoteViewsService.Remote
         return true
     }
 
-    override fun getViewAt(position: Int): RemoteViews {
+    override fun getViewAt(position: Int): RemoteViews? {
+        if (position >= count) {
+            return loadingView
+        }
         val rv = RemoteViews(context.packageName, R.layout.renran_wiget_item)
         val rlm = Realm.getInstance(RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
                 .name(RealmHelper.realmName)
                 .build())
+
         val results = rlm?.copyFromRealm(
                 rlm.where((Schedule::class.java))
                         .equalTo("isDelete", false)
                         .equalTo("isShowOnScreen", true)
                         .findAllSorted("date"))
+
         val schedule: Schedule? = results?.get(position)
         val day = (System.currentTimeMillis().div(1000) - schedule!!.date).div(86400)
         schedule.let {
+
             rv.setTextViewText(R.id.tv_widget_schedule_text,
                     Utils.formatDescription(context, day, schedule.description!!))
             rv.setTextViewText(R.id.tv_widget_day, formateDay(context, day))
@@ -63,6 +69,7 @@ class RenRanWidgetViewsFactory(val context: Context) : RemoteViewsService.Remote
             val intent = Intent()
             rv.setOnClickFillInIntent(R.id.relative_widget, intent)
         }
+
 
         return rv
 

@@ -3,6 +3,7 @@ package com.aidchow.renran.schedules
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
@@ -58,6 +59,7 @@ class SchedulesFragment : BaseFragment(), SchedulesContract.View, SchedulesAdapt
         adapter?.mShareButtonListener = this
         recycler_view_of_schedules.adapter = adapter
         tv_empty_tips.setOnClickListener { showAddNewScheduleUi() }
+        tv_tool_bar_right.setOnClickListener { AlertDialog.Builder(context).setView(R.layout.about_dialog_layout).create().show() }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

@@ -36,7 +36,7 @@ class AddSchedulePresenter(private val mScheduleID: String?,
 
     private fun createSchedule(imagePath: String?, description: String?, date: Long) {
 
-        if (description?.isEmpty()!! || imagePath?.isEmpty()!! || date == 0L) {
+        if (description?.isEmpty()!! || imagePath == null || date == 0L) {
             view.showEmptyScheduleError()
         } else {
             val schedule = Schedule(imagePath, description, date)

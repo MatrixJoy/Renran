@@ -58,12 +58,13 @@ class RenRanAppWidgetProvider : AppWidgetProvider() {
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
+              super.onReceive(context, intent)
+
         if (REFRESH_ACTION == intent?.action) {
             val amg = AppWidgetManager.getInstance(context)
             val name = ComponentName(context, RenRanAppWidgetProvider::class.java)
             amg.notifyAppWidgetViewDataChanged(amg.getAppWidgetIds(name), R.id.widget_list_view)
         }
-        super.onReceive(context, intent)
 
     }
 

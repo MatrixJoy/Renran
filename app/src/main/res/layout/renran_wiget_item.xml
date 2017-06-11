@@ -3,7 +3,7 @@
     android:id="@+id/relative_widget"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/widget_back">
+    android:alpha="1">
 
 
     <TextView
@@ -11,8 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="@string/schedule_string"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/white"
+        android:text="@string/schedule_string" />
 
     <TextView
         android:id="@+id/tv_widget_day"
@@ -21,6 +21,6 @@
         android:layout_below="@+id/tv_widget_schedule_text"
         android:layout_centerHorizontal="true"
         android:text="@string/day"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:textStyle="bold" />
 </RelativeLayout>
