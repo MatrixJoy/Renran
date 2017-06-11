@@ -102,6 +102,11 @@ open abstract class BaseFragment : Fragment() {
         }).setActionTextColor(Color.RED).show()
     }
 
+    /**
+     * when sub class has implements this methods should
+     * add super.onActivityResult()
+     * see [SchedulesFragment]
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         println(requestCode)
         when (requestCode) {

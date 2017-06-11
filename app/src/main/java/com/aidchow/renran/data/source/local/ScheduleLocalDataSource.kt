@@ -61,6 +61,9 @@ class ScheduleLocalDataSource private constructor() : ScheduleDataSource {
         rlm.close()
     }
 
+    /**
+     * logic delete just tag the isDelete true
+     */
     override fun deleteSchedule(schedule: Schedule) {
         val rlm = RealmHelper.getRenRanRealmInstance()
         rlm.beginTransaction()

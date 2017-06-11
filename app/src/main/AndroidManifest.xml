@@ -11,6 +11,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".schedules.MainActivity">
@@ -35,6 +36,17 @@
         </provider>
 
         <activity android:name=".addschedule.AddScheduleActivity" />
+        <receiver android:name=".ui.appwidget.RenRanAppWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/renran_appwidget_info" />
+        </receiver>
+        <service
+            android:name=".ui.appwidget.RenRanWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>

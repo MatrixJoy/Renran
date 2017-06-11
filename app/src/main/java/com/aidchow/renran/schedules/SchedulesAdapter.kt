@@ -7,10 +7,7 @@ import android.text.Spanned
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
 import android.util.TypedValue
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.aidchow.renran.R
 import com.aidchow.renran.data.Schedule
 import com.bumptech.glide.Glide
@@ -80,7 +77,19 @@ class SchedulesAdapter(var schedules: MutableList<Schedule>?) : RecyclerView.Ada
         return SchedulesViewHolder(view)
     }
 
-    class SchedulesViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
+    inner class SchedulesViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView), View.OnCreateContextMenuListener {
+        override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+            if (menu != null) {
+                menu.add(Menu.NONE, R.id.action_delete, 0, R.string.delete)
+                menu.add(Menu.NONE, R.id.action_modify, 0, R.string.modify)
+                if (schedules!![adapterPosition].isShowOnScreen!!) {
+                    menu.add(Menu.NONE, R.id.action_add_on_widget, 0, R.string.delete_on_screen)
+                } else {
+                    menu.add(Menu.NONE, R.id.action_add_on_widget, 0, R.string.add_on_screen)
+                }
+            }
+        }
+
         val tvDay = itemView?.tv_day
         val tvScheduleText = itemView?.tv_schedule_text
         val tvTrueDate = itemView?.tv_true_date
@@ -88,11 +97,7 @@ class SchedulesAdapter(var schedules: MutableList<Schedule>?) : RecyclerView.Ada
         val imageView = itemView?.image_of_schedule
 
         init {
-            itemView?.setOnCreateContextMenuListener {
-                menu, _, _ ->
-                menu?.add(Menu.NONE, R.id.action_delete, 0, R.string.delete)
-                menu?.add(Menu.NONE, R.id.action_modify, 0, R.string.modify)
-            }
+            itemView?.setOnCreateContextMenuListener(this)
         }
 
     }

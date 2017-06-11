@@ -15,4 +15,9 @@
         android:id="@+id/action_modify"
         android:title="@string/modify"
         android:visible="false" />
+
+    <item
+        android:id="@+id/action_add_on_widget"
+        android:title="@string/add_on_screen"
+        android:visible="false" />
 </menu>

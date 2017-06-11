@@ -42,6 +42,8 @@ class SchedulesPresenter(val scheduleRepository: ScheduleRepository,
 
     override fun deleteSchedules(schedule: Schedule) {
         scheduleRepository.deleteSchedule(schedule)
+        view.setShowOnscreen()
+
     }
 
     override fun addNewSchedules() {
@@ -52,5 +54,11 @@ class SchedulesPresenter(val scheduleRepository: ScheduleRepository,
         if (AddScheduleActivity.ADD_SCHEDULE_REQUEST_CODE == requestCode && RESULT_OK == resultCode) {
             view.showAddSuccessView()
         }
+    }
+
+    override fun showOnScreen(schedule: Schedule) {
+        scheduleRepository.updateSchedule(schedule)
+        view.setShowOnscreen()
+
     }
 }

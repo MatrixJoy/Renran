@@ -6,11 +6,6 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.AbsoluteSizeSpan
-import android.text.style.ForegroundColorSpan
-import android.util.TypedValue
 import android.view.*
 import com.aidchow.renran.R
 import com.aidchow.renran.utils.Utils
@@ -92,30 +87,13 @@ class ScheduleShareFragment : Fragment(), ShareScheduleContract.View {
 
     override fun setDescriptionAndDate(description: String, date: Long) {
         val day = (System.currentTimeMillis().div(1000) - date).div(86400)
-        if (day < 0) {
-            tv_schedule_text?.text = context?.getString(R.string.schedule_string)
-                    ?.format(description)
-        } else {
-            tv_schedule_text?.text = context?.getString(R.string.schedule_pass_string)
-                    ?.format(description)
-        }
 
-        val textDay = context?.getString(R.string.day)?.format(Math.abs(day))
+        tv_schedule_text.text = Utils.formatDescription(context, day, description)
 
-        val spanString = SpannableString(textDay)
-
-        val size: Int = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 64.0f,
-                context?.resources?.displayMetrics).toInt()
-
-        spanString.setSpan(AbsoluteSizeSpan(size), 0, spanString.length - 1,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-        spanString.setSpan(ForegroundColorSpan(context?.resources!!.getColor(android.R.color.darker_gray)),
-                spanString.length - 1, spanString.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        println(spanString)
-        tv_day?.text = spanString
+        tv_day?.text = Utils.formateDay(context, day)
 
         val trueDate = SimpleDateFormat(context?.getString(R.string.date_format), Locale.getDefault())
+
         tv_true_date!!.text = context?.getString(R.string.true_date)!!
                 .format(trueDate.format(Date(date * 1000)))
     }

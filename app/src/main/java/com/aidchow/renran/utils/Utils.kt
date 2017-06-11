@@ -9,6 +9,12 @@ import android.os.Build
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.AbsoluteSizeSpan
+import android.text.style.ForegroundColorSpan
+import android.util.TypedValue
+import com.aidchow.renran.R
 import java.io.File
 import java.io.FileOutputStream
 
@@ -95,6 +101,33 @@ object Utils {
             cursor.close()
         }
         return path
+    }
+
+    fun formatDescription(context: Context, day: Long, description: String): String? {
+        if (day < 0) {
+            return context.getString(R.string.schedule_string)
+                    ?.format(description)
+        } else {
+            return context.getString(R.string.schedule_pass_string)
+                    ?.format(description)
+        }
+    }
+
+    fun formateDay(context: Context, day: Long): SpannableString? {
+        val textDay = context.getString(R.string.day)?.format(Math.abs(day))
+
+        val spanString = SpannableString(textDay)
+
+        val size: Int = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 64.0f,
+                context.resources?.displayMetrics).toInt()
+
+        spanString.setSpan(AbsoluteSizeSpan(size), 0, spanString.length - 1,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        spanString.setSpan(ForegroundColorSpan(context.resources!!.getColor(android.R.color.darker_gray)),
+                spanString.length - 1, spanString.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        return spanString
     }
 
 

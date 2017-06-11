@@ -23,8 +23,9 @@ open class Schedule(
 
     @PrimaryKey var scheduleID: String? = UUID.randomUUID().toString()
 
+    var isShowOnScreen: Boolean? = false
     override fun toString(): String {
-        return "Schedule(imagePath=$imagePath, description=$description, date=$date, isDelete=$isDelete, scheduleID=$scheduleID)"
+        return "Schedule(imagePath=$imagePath, description=$description, date=$date, isDelete=$isDelete, scheduleID=$scheduleID, isShowOnScreen=$isShowOnScreen)"
     }
 
 }

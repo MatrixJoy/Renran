@@ -15,6 +15,7 @@ import com.aidchow.renran.data.source.ScheduleRepository
 import com.aidchow.renran.data.source.local.ScheduleLocalDataSource
 import com.aidchow.renran.sharescedule.ScheduleShareFragment
 import com.aidchow.renran.sharescedule.ShareSchedulePresenter
+import com.aidchow.renran.ui.appwidget.RenRanAppWidgetProvider
 import kotlinx.android.synthetic.main.schedules_fragment.*
 
 /**
@@ -78,6 +79,14 @@ class SchedulesFragment : BaseFragment(), SchedulesContract.View, SchedulesAdapt
             R.id.action_modify -> {
                 showModifySchedulesUi(adapter?.getData(adapter?.position!!)?.scheduleID!!)
                 return true
+            }
+            R.id.action_add_on_widget -> {
+                val temp = adapter?.getData(adapter?.position!!)
+                val sc: Schedule? = Schedule(temp?.imagePath, temp?.description, temp?.date!!)
+                sc?.scheduleID = temp.scheduleID
+                sc?.isShowOnScreen = item.title == getString(R.string.add_on_screen)
+                presenter?.showOnScreen(sc!!)
+
             }
         }
         return super.onContextItemSelected(item)
@@ -144,6 +153,9 @@ class SchedulesFragment : BaseFragment(), SchedulesContract.View, SchedulesAdapt
         Snackbar.make(view!!, R.string.add_success, Snackbar.LENGTH_SHORT).show()
     }
 
+    override fun setShowOnscreen() {
+        activity.sendBroadcast(RenRanAppWidgetProvider.getRefreshBroadcastIntent(context))
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

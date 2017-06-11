@@ -23,4 +23,7 @@
     <string name="setting">设置</string>
     <string name="add_success">添加成功</string>
     <string name="can_not_empty">记录不能为空哦!</string>
+    <string name="add_on_screen">添加到桌面</string>
+    <string name="delete_on_screen">从桌面删除</string>
+    <string name="loading">加载中...</string>
 </resources>

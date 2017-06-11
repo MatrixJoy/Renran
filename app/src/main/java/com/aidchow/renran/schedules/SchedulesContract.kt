@@ -22,6 +22,7 @@ interface SchedulesContract {
 
         fun showAddSuccessView()
 
+        fun setShowOnscreen()
     }
 
     interface Presenter : BasePresenter {
@@ -34,5 +35,6 @@ interface SchedulesContract {
         fun addNewSchedules()
         fun result(requestCode: Int, resultCode: Int)
 
+        fun showOnScreen(schedule: Schedule)
     }
 }
