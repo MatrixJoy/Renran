@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.aidchow.renran.ui.CircleImageView
+            <com.aidchow.renran.ui.widget.CircleImageView
                 android:id="@+id/image_of_schedule"
                 android:layout_width="256dp"
                 android:layout_height="256dp"

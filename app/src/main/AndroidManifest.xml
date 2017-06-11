@@ -14,16 +14,21 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".schedules.MainActivity">
+        <activity
+            android:name=".ui.SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
+
+        <activity android:name=".schedules.MainActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -36,17 +41,21 @@
         </provider>
 
         <activity android:name=".addschedule.AddScheduleActivity" />
+
         <receiver android:name=".ui.appwidget.RenRanAppWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/renran_appwidget_info" />
         </receiver>
+
         <service
             android:name=".ui.appwidget.RenRanWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
     </application>
 
 </manifest>

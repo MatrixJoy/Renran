@@ -1,10 +1,12 @@
 package com.aidchow.renran.addschedule
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import com.aidchow.renran.BaseFragment
 import com.aidchow.renran.R
@@ -58,8 +60,14 @@ class AddScheduleFragment : BaseFragment(), AddScheduleContract.View, DatePicker
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.action_add_new_schedule -> presenter?.saveSchedule(imagePath,
-                    edit_description?.text.toString(), date, mScheduleId)
+            R.id.action_add_new_schedule -> {
+                val mag: InputMethodManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                mag.hideSoftInputFromWindow(edit_description.windowToken, 0)
+                presenter?.saveSchedule(imagePath,
+                        edit_description?.text.toString(), date, mScheduleId)
+
+            }
+
         }
         return super.onOptionsItemSelected(item)
     }
