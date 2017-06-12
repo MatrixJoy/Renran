@@ -59,7 +59,7 @@ class SchedulesFragment : BaseFragment(), SchedulesContract.View, SchedulesAdapt
         adapter?.mShareButtonListener = this
         recycler_view_of_schedules.adapter = adapter
         tv_empty_tips.setOnClickListener { showAddNewScheduleUi() }
-        tv_tool_bar_right.setOnClickListener { AlertDialog.Builder(context).setView(R.layout.about_dialog_layout).create().show() }
+        image_tool_bar_right.setOnClickListener { AlertDialog.Builder(context).setView(R.layout.about_dialog_layout).create().show() }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

@@ -51,7 +51,7 @@ class ScheduleShareFragment : Fragment(), ShareScheduleContract.View {
                 shareIntent.action = Intent.ACTION_SEND
                 shareIntent.type = "image/jpeg"
                 shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
-                startActivity(Intent.createChooser(shareIntent, getString(R.string.share)))
+                startActivity(Intent.createChooser(shareIntent, getString(R.string.share_to)))
             }
         }
         return super.onOptionsItemSelected(item)
@@ -90,7 +90,7 @@ class ScheduleShareFragment : Fragment(), ShareScheduleContract.View {
 
         tv_schedule_text.text = Utils.formatDescription(context, day, description)
 
-        tv_day?.text = Utils.formateDay(context, day)
+        tv_day?.text = Utils.formatDay(context, day)
 
         val trueDate = SimpleDateFormat(context?.getString(R.string.date_format), Locale.getDefault())
 

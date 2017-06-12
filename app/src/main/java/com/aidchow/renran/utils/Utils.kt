@@ -113,19 +113,20 @@ object Utils {
         }
     }
 
-    fun formateDay(context: Context, day: Long): SpannableString? {
-        val textDay = context.getString(R.string.day)?.format(Math.abs(day))
+    fun formatDay(context: Context, day: Long): SpannableString? {
+        val dayStr = Math.abs(day).toString()
+        val textDay = context.getString(R.string.day)?.format(dayStr)
 
         val spanString = SpannableString(textDay)
 
         val size: Int = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 64.0f,
                 context.resources?.displayMetrics).toInt()
 
-        spanString.setSpan(AbsoluteSizeSpan(size), 0, spanString.length - 1,
+        spanString.setSpan(AbsoluteSizeSpan(size), 0,dayStr.length,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         spanString.setSpan(ForegroundColorSpan(context.resources!!.getColor(android.R.color.darker_gray)),
-                spanString.length - 1, spanString.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                spanString.length - dayStr.length, spanString.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         return spanString
     }
