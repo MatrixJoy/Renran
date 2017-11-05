@@ -21,8 +21,10 @@ class AddSchedulePresenter(private val mScheduleID: String?,
     override fun start() {
         if (!isNewSchedule) {
             populateSchedule()
-        } else {
+        } else if (imagePath != null){
             view.setImage(imagePath)
+        }else{
+            view.hideAddImage()
         }
     }
 
@@ -36,7 +38,7 @@ class AddSchedulePresenter(private val mScheduleID: String?,
 
     private fun createSchedule(imagePath: String?, description: String?, date: Long) {
 
-        if (description?.isEmpty()!! || imagePath == null || date == 0L) {
+        if (description?.isEmpty()!! || date == 0L) {
             view.showEmptyScheduleError()
         } else {
             val schedule = Schedule(imagePath, description, date)
@@ -71,7 +73,11 @@ class AddSchedulePresenter(private val mScheduleID: String?,
             view.setDate(schedule.date)
             view.setDescription(schedule.description!!)
             view.setScheduleId(schedule.scheduleID)
-            view.setImage(schedule.imagePath!!)
+            if (schedule.imagePath == null){
+                view.hideAddImage()
+            }else{
+                view.setImage(schedule.imagePath)
+            }
         }
     }
 

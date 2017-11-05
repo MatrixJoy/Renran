@@ -2,9 +2,11 @@ package com.aidchow.renran.schedules
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import com.aidchow.renran.R
 import com.aidchow.renran.data.source.ScheduleRepository
 import com.aidchow.renran.data.source.local.ScheduleLocalDataSource
+import com.aidchow.renran.ui.appwidget.RenRanAppWidgetProvider
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,8 +37,12 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.popBackStack()
         } else {
             super.onBackPressed()
-
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        sendBroadcast(RenRanAppWidgetProvider.getRefreshBroadcastIntent(this))
     }
 
 }

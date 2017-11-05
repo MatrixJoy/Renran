@@ -12,7 +12,6 @@ object RealmHelper {
 
         return Realm.getInstance(RealmConfiguration
                 .Builder()
-                .deleteRealmIfMigrationNeeded()
                 .name(realmName)
                 .build())
     }

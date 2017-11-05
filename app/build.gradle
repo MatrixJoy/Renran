@@ -4,13 +4,13 @@ apply plugin: 'realm-android'
 apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.aidchow.renran"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.01 beta"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -19,6 +19,14 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi','armeabi-v7a','mips'
+            universalApk false
         }
     }
 

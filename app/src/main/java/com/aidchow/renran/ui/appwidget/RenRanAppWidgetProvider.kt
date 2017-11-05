@@ -7,9 +7,12 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.widget.RemoteViews
 import com.aidchow.renran.R
 import com.aidchow.renran.schedules.MainActivity
+import com.aidchow.renran.utils.Utils
+import java.util.*
 
 /**
  * Created by aidchow on 17-6-11.
@@ -22,6 +25,7 @@ class RenRanAppWidgetProvider : AppWidgetProvider() {
             return Intent(REFRESH_ACTION)
                     .setComponent(ComponentName(context, RenRanAppWidgetProvider::class.java))
         }
+
     }
 
     override fun onUpdate(context: Context?, appWidgetManager: AppWidgetManager?, appWidgetIds: IntArray?) {
@@ -44,6 +48,7 @@ class RenRanAppWidgetProvider : AppWidgetProvider() {
             rv.setPendingIntentTemplate(R.id.widget_list_view, itemPendingIntent)
             rv.setOnClickPendingIntent(R.id.tv_empty_view, itemPendingIntent)
 
+            appWidgetManager?.updateAppWidget(appWidgetIds[i], null)
             appWidgetManager?.updateAppWidget(appWidgetIds[i], rv)
         }
         super.onUpdate(context, appWidgetManager, appWidgetIds)
@@ -58,14 +63,12 @@ class RenRanAppWidgetProvider : AppWidgetProvider() {
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
-              super.onReceive(context, intent)
-
+        super.onReceive(context, intent)
         if (REFRESH_ACTION == intent?.action) {
             val amg = AppWidgetManager.getInstance(context)
             val name = ComponentName(context, RenRanAppWidgetProvider::class.java)
             amg.notifyAppWidgetViewDataChanged(amg.getAppWidgetIds(name), R.id.widget_list_view)
         }
-
     }
 
 

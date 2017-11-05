@@ -13,10 +13,13 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.util.TypedValue
 import com.aidchow.renran.R
 import java.io.File
 import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Created by aidchow on 17-6-9.
@@ -26,19 +29,33 @@ object Utils {
      * for share to qq
      *  because qq not support file provider  so use this way to create a uri to share image
      */
-    fun createBitmapUri(context: Context, bitmap: Bitmap): Uri {
-        val sharePath = context.externalCacheDir
+    fun createBitmapUri(context: Context, bitmap: Bitmap): Uri? {
+        val sharePath = File(context.externalCacheDir, "images")
+        var uri: Uri? = null
+        var out: FileOutputStream? = null
         if (!sharePath.exists()) {
             sharePath.mkdirs()
         }
-        val file = File(sharePath, "share.jpeg")
+        val file = File(sharePath, "share.jpg")
         if (!file.exists()) {
             file.createNewFile()
         }
-        val out = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
-        val filePath = "file:" + file.absolutePath
-        return Uri.parse(filePath)
+        try{
+            out = FileOutputStream(file)
+
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+            uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                FileProvider.getUriForFile(context, "com.aidchow.renran.fileprovider", file)
+            } else {
+                Uri.fromFile(file)
+            }
+        }finally {
+            if(out != null){
+                out.close()
+            }
+        }
+
+        return uri
     }
 
     /**
@@ -104,32 +121,47 @@ object Utils {
     }
 
     fun formatDescription(context: Context, day: Long, description: String): String? {
-        if (day < 0) {
-            return context.getString(R.string.schedule_string)
+        return when {
+            day < 0 -> context.getString(R.string.schedule_string)
                     ?.format(description)
-        } else {
-            return context.getString(R.string.schedule_pass_string)
+            day > 0 -> context.getString(R.string.schedule_pass_string)
                     ?.format(description)
+            else -> context.getString(R.string.schedule_has_today_string).format(description)
         }
     }
 
     fun formatDay(context: Context, day: Long): SpannableString? {
-        val dayStr = Math.abs(day).toString()
-        val textDay = context.getString(R.string.day)?.format(dayStr)
+        var textDay: String? = null
+        val dayStr: String = Math.abs(day).toString()
+        textDay = if (day == 0L) {
+            context.getString(R.string.today)
+        } else {
+
+            context.getString(R.string.day)?.format(dayStr)
+        }
+
 
         val spanString = SpannableString(textDay)
 
         val size: Int = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 64.0f,
                 context.resources?.displayMetrics).toInt()
 
-        spanString.setSpan(AbsoluteSizeSpan(size), 0,dayStr.length,
+        spanString.setSpan(AbsoluteSizeSpan(size), 0, dayStr.length,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         spanString.setSpan(ForegroundColorSpan(context.resources!!.getColor(android.R.color.darker_gray)),
-                spanString.length - dayStr.length, spanString.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                spanString.length - 1, spanString.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         return spanString
     }
 
+    fun getDay(day: Long): Long {
+        val simpleFormatDta = SimpleDateFormat("yyy-MM-dd 00:00:00 ", Locale.getDefault())
+        val currentDate: Date = simpleFormatDta.parse(simpleFormatDta.format(System.currentTimeMillis()))
+        val dueDate: Date = simpleFormatDta.parse(simpleFormatDta.format(day * 1000))
+        val result = (currentDate.time - dueDate.time) / (1000 * 3600 * 24)
+
+        return result
+    }
 
 }

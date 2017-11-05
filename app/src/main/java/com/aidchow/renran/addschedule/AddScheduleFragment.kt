@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import com.aidchow.renran.BaseFragment
 import com.aidchow.renran.R
+import com.aidchow.renran.ui.appwidget.RenRanAppWidgetProvider
 import com.bumptech.glide.Glide
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import kotlinx.android.synthetic.main.add_schedule_fragment.*
@@ -65,7 +66,7 @@ class AddScheduleFragment : BaseFragment(), AddScheduleContract.View, DatePicker
                 mag.hideSoftInputFromWindow(edit_description.windowToken, 0)
                 presenter?.saveSchedule(imagePath,
                         edit_description?.text.toString(), date, mScheduleId)
-
+                activity.sendBroadcast(RenRanAppWidgetProvider.getRefreshBroadcastIntent(context))
             }
 
         }
@@ -115,6 +116,7 @@ class AddScheduleFragment : BaseFragment(), AddScheduleContract.View, DatePicker
 
     override fun setDescription(description: String) {
         (edit_description as TextView).text = description
+        (edit_description).setSelection(description.length)
     }
 
     override fun setDate(date: Long) {
@@ -146,6 +148,10 @@ class AddScheduleFragment : BaseFragment(), AddScheduleContract.View, DatePicker
 
     override fun setImagePath(imagePath: String) {
         setImage(imagePath)
+    }
+
+    override fun hideAddImage() {
+        image_review.visibility = View.GONE
     }
 
     override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {

@@ -47,7 +47,7 @@ class ScheduleShareFragment : Fragment(), ShareScheduleContract.View {
                 val bitmap = Bitmap.createBitmap(card_container.drawingCache)
                 card_container.isDrawingCacheEnabled = false
                 val uri = Utils.createBitmapUri(activity, bitmap)
-                val shareIntent: Intent = Intent()
+                val shareIntent = Intent()
                 shareIntent.action = Intent.ACTION_SEND
                 shareIntent.type = "image/jpeg"
                 shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
@@ -80,13 +80,13 @@ class ScheduleShareFragment : Fragment(), ShareScheduleContract.View {
         this.presenter = presenter
     }
 
-    override fun setImage(imagePath: String) {
+    override fun setImage(imagePath: String?) {
         Glide.with(context).load(imagePath).into(image_of_schedule)
     }
 
 
     override fun setDescriptionAndDate(description: String, date: Long) {
-        val day = (System.currentTimeMillis().div(1000) - date).div(86400)
+        val day = Utils.getDay(date)
 
         tv_schedule_text.text = Utils.formatDescription(context, day, description)
 

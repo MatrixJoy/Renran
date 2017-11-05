@@ -8,7 +8,7 @@ import android.widget.RemoteViewsService
  */
 class RenRanWidgetService : RemoteViewsService() {
     override fun onGetViewFactory(intent: Intent?): RemoteViewsFactory {
-        return RenRanWidgetViewsFactory(this.applicationContext)
+        return RenRanWidgetViewsFactory(this.applicationContext,intent!!)
     }
 
 }

@@ -37,7 +37,7 @@ class ShareSchedulePresenter(private val mScheduleID: String?,
     override fun onScheduleLoaded(schedule: Schedule) {
         if (view.isActive()) {
             view.setDescriptionAndDate(schedule.description!!,schedule.date)
-            view.setImage(schedule.imagePath!!)
+            view.setImage(schedule.imagePath)
         }
     }
 

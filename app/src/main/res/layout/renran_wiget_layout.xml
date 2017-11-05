@@ -1,12 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#4cFFFFFF">
+
+    <LinearLayout
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:src="@drawable/nav_logo" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/widget_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/title_layout"
+        android:divider="@android:color/transparent"
         android:scrollbars="none" />
 
     <TextView
@@ -14,6 +31,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="@string/empty_tips"
+        android:text="@string/click_to_add"
         android:textSize="20sp" />
 </RelativeLayout>

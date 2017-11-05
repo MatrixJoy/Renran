@@ -1,11 +1,15 @@
 package com.aidchow.renran.schedules
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.*
 import com.aidchow.renran.BaseFragment
 import com.aidchow.renran.R
@@ -14,9 +18,11 @@ import com.aidchow.renran.addschedule.AddScheduleFragment
 import com.aidchow.renran.data.Schedule
 import com.aidchow.renran.data.source.ScheduleRepository
 import com.aidchow.renran.data.source.local.ScheduleLocalDataSource
+import com.aidchow.renran.setting.SettingActivity
 import com.aidchow.renran.sharescedule.ScheduleShareFragment
 import com.aidchow.renran.sharescedule.ShareSchedulePresenter
 import com.aidchow.renran.ui.appwidget.RenRanAppWidgetProvider
+import com.aidchow.renran.utils.Utils
 import kotlinx.android.synthetic.main.schedules_fragment.*
 
 /**
@@ -60,6 +66,10 @@ class SchedulesFragment : BaseFragment(), SchedulesContract.View, SchedulesAdapt
         recycler_view_of_schedules.adapter = adapter
         tv_empty_tips.setOnClickListener { showAddNewScheduleUi() }
         image_tool_bar_right.setOnClickListener { AlertDialog.Builder(context).setView(R.layout.about_dialog_layout).create().show() }
+        image_tool_bar_right.setOnLongClickListener {
+            startActivity(Intent(activity, SettingActivity::class.java))
+            true
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -72,6 +82,8 @@ class SchedulesFragment : BaseFragment(), SchedulesContract.View, SchedulesAdapt
         return super.onOptionsItemSelected(item)
     }
 
+
+
     override fun onContextItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.action_delete -> {
@@ -83,12 +95,7 @@ class SchedulesFragment : BaseFragment(), SchedulesContract.View, SchedulesAdapt
                 return true
             }
             R.id.action_add_on_widget -> {
-                val temp = adapter?.getData(adapter?.position!!)
-                val sc: Schedule? = Schedule(temp?.imagePath, temp?.description, temp?.date!!)
-                sc?.scheduleID = temp.scheduleID
-                sc?.isShowOnScreen = item.title == getString(R.string.add_on_screen)
-                presenter?.showOnScreen(sc!!)
-
+            //TODO 添加到屏幕
             }
         }
         return super.onContextItemSelected(item)
@@ -96,14 +103,21 @@ class SchedulesFragment : BaseFragment(), SchedulesContract.View, SchedulesAdapt
 
     private fun deleteSchedule() {
         presenter?.deleteSchedules(adapter?.getData(adapter?.position!!)!!)
-        adapter?.removieItem(adapter?.position!!)
-        if (adapter?.getdatas()!!.isEmpty()) {
+        adapter?.removeItem(adapter?.position!!)
+        if (adapter?.getDatas()!!.isEmpty()) {
             noSchedules()
         }
+        setShowOnscreen()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.schedules_menu, menu)
+        object:Handler(){}.post {
+            view?.findViewById(R.id.add_new_schedule)?.setOnLongClickListener {
+                openAddNewSchedule(null,null)
+                true
+            }
+        }
     }
 
     override fun showSchedules(schedules: MutableList<Schedule>) {
@@ -134,20 +148,30 @@ class SchedulesFragment : BaseFragment(), SchedulesContract.View, SchedulesAdapt
 
 
     override fun onShareButtonClick(view: View, position: Int) {
-        val frg = ScheduleShareFragment.newInstance()
+//        val frg = ScheduleShareFragment.newInstance()
+//
+//        fragmentManager.beginTransaction().add(R.id.frg_container,
+//                frg)
+//                .addToBackStack(ScheduleShareFragment::class.java.canonicalName)
+//                .hide(this)
+//                .commit()
+//
+//        ScheduleRepository.destroyInstance()
+//
+//        frg.setPresenter(ShareSchedulePresenter(adapter?.getData(position)!!.scheduleID,
+//                ScheduleRepository.getInstance(ScheduleLocalDataSource.getInstance())
+//                , frg))
 
-        fragmentManager.beginTransaction().add(R.id.frg_container,
-                frg)
-                .addToBackStack(ScheduleShareFragment::class.java.canonicalName)
-                .hide(this)
-                .commit()
-
-        ScheduleRepository.destroyInstance()
-
-        frg.setPresenter(ShareSchedulePresenter(adapter?.getData(position)!!.scheduleID,
-                ScheduleRepository.getInstance(ScheduleLocalDataSource.getInstance())
-                , frg))
-
+        view.isDrawingCacheEnabled = true
+        view.buildDrawingCache()
+        val bitmap = Bitmap.createBitmap(view.drawingCache)
+        view.isDrawingCacheEnabled = false
+        val uri = Utils.createBitmapUri(activity, bitmap)
+        val shareIntent = Intent()
+        shareIntent.action = Intent.ACTION_SEND
+        shareIntent.type = "image/jpeg"
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.share_to)))
     }
 
 
@@ -177,5 +201,9 @@ class SchedulesFragment : BaseFragment(), SchedulesContract.View, SchedulesAdapt
 
     override fun setImagePath(imagePath: String) {
         openAddNewSchedule(imagePath, null)
+    }
+
+    override fun onPause() {
+        super.onPause()
     }
 }

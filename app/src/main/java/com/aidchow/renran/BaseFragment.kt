@@ -108,7 +108,6 @@ open abstract class BaseFragment : Fragment() {
      * see [SchedulesFragment]
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        println(requestCode)
         when (requestCode) {
             TAKEPHOTO_REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {

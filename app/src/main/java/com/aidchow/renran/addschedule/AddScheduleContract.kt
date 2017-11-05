@@ -27,6 +27,8 @@ interface AddScheduleContract {
         fun isActive(): Boolean
 
         fun showEmptyScheduleError()
+
+        fun hideAddImage()
     }
 
 }

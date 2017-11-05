@@ -13,7 +13,7 @@ interface ShareScheduleContract {
     }
 
     interface View : BaseView<Presenter> {
-        fun setImage(imagePath: String)
+        fun setImage(imagePath: String?)
 
         fun setDescriptionAndDate(description: String, date: Long)
 
