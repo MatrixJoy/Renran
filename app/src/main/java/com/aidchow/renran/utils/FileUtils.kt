@@ -59,7 +59,9 @@ object FileUtils {
 
 
     fun backUpImage(imagePath: String): String {
+        val b:String? = "addddd"
 
+        val l = b?.length
         val imageName = SimpleDateFormat("yyy-MM-dd HH:mm:ss", Locale.getDefault())
                 .format(System.currentTimeMillis())
         val imageFile = File(getBackUpImageDir(), imageName)

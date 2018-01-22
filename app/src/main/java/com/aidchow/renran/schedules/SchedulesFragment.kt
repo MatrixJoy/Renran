@@ -1,6 +1,5 @@
 package com.aidchow.renran.schedules
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -9,18 +8,13 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.*
 import com.aidchow.renran.BaseFragment
 import com.aidchow.renran.R
 import com.aidchow.renran.addschedule.AddScheduleActivity
 import com.aidchow.renran.addschedule.AddScheduleFragment
 import com.aidchow.renran.data.Schedule
-import com.aidchow.renran.data.source.ScheduleRepository
-import com.aidchow.renran.data.source.local.ScheduleLocalDataSource
 import com.aidchow.renran.setting.SettingActivity
-import com.aidchow.renran.sharescedule.ScheduleShareFragment
-import com.aidchow.renran.sharescedule.ShareSchedulePresenter
 import com.aidchow.renran.ui.appwidget.RenRanAppWidgetProvider
 import com.aidchow.renran.utils.Utils
 import kotlinx.android.synthetic.main.schedules_fragment.*
@@ -57,8 +51,8 @@ class SchedulesFragment : BaseFragment(), SchedulesContract.View, SchedulesAdapt
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        (activity as AppCompatActivity).supportActionBar?.title = ""
+        (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
+        (activity as? AppCompatActivity)?.supportActionBar?.title = ""
         recycler_view_of_schedules.layoutManager = LinearLayoutManager(activity,
                 LinearLayoutManager.HORIZONTAL, false)
         adapter = SchedulesAdapter(ArrayList(0))
